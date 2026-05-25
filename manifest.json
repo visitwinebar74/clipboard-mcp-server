@@ -3,7 +3,7 @@
   "name": "clipboard-mcp-server",
   "version": "0.1.3",
   "description": "Read, write, and inspect the system clipboard across macOS, Linux (X11/Wayland), and Windows via MCP.",
-  "author": { "name": "Casey Hand", "email": "casey@caseyjhand.com" },
+  "author": { "name": "cyanheads" },
   "server": {
     "type": "node",
     "entry_point": "dist/index.js",

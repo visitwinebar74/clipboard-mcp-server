@@ -38,6 +38,7 @@ Tailor suggestions to what's actually missing or stale — don't recite the full
 - **Check `ctx.elicit` / `ctx.sample`** for presence before calling.
 - **Secrets in env vars only** — never hardcoded.
 - **Close the loop on issues.** When implementing work tracked by a GitHub issue, comment on the issue with what landed before moving on. The comment is for future readers — state the concrete changes, not the conversation that produced them.
+- **No Docker.** This server requires direct host OS access (pbcopy/pbpaste, JXA/NSPasteboard on macOS; xclip/wl-clipboard on Linux). None of these work inside a container. Skip Docker build/push steps in any release or publish workflow.
 
 ---
 
