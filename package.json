@@ -1,7 +1,7 @@
 {
   "name": "@cyanheads/clipboard-mcp-server",
   "version": "0.1.0",
-  "description": "",
+  "description": "Read, write, and inspect the system clipboard across macOS, Linux (X11/Wayland), and Windows via MCP.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -37,10 +37,35 @@
     "start:stdio": "MCP_TRANSPORT_TYPE=stdio node dist/index.js",
     "start:http": "MCP_TRANSPORT_TYPE=http node dist/index.js"
   },
-  "keywords": ["mcp", "mcp-server", "model-context-protocol"],
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "ai",
+    "llm",
+    "typescript",
+    "bun",
+    "stdio",
+    "streamable-http",
+    "clipboard",
+    "copy-paste",
+    "macos",
+    "linux",
+    "windows",
+    "cross-platform"
+  ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/cyanheads/clipboard-mcp-server"
+  },
+  "author": {
+    "name": "Casey Hand",
+    "email": "casey@caseyjhand.com",
+    "url": "https://caseyjhand.com"
+  },
+  "homepage": "https://github.com/cyanheads/clipboard-mcp-server#readme",
+  "bugs": {
+    "url": "https://github.com/cyanheads/clipboard-mcp-server/issues"
   },
   "license": "Apache-2.0",
   "engines": {

@@ -2,8 +2,8 @@
   "manifest_version": "0.3",
   "name": "clipboard-mcp-server",
   "version": "0.1.0",
-  "description": "",
-  "author": { "name": "" },
+  "description": "Read, write, and inspect the system clipboard across macOS, Linux (X11/Wayland), and Windows via MCP.",
+  "author": { "name": "Casey Hand", "email": "casey@caseyjhand.com" },
   "server": {
     "type": "node",
     "entry_point": "dist/index.js",
@@ -22,5 +22,13 @@
   },
   "tools_generated": true,
   "prompts_generated": true,
-  "user_config": {}
+  "user_config": {
+    "MCP_LOG_LEVEL": {
+      "title": "Log Level",
+      "description": "Minimum log level for output. Options: debug, info, notice, warning, error.",
+      "type": "string",
+      "default": "info",
+      "required": false
+    }
+  }
 }

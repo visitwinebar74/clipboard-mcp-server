@@ -11,19 +11,6 @@
 
 ---
 
-## First Session
-
-This project was just scaffolded with `bunx @cyanheads/mcp-ts-core init`. The framework, skills, and example definitions are in place — the domain isn't. The user's first messages will set direction; wait for them before proceeding.
-
-> **Remove this section** from CLAUDE.md / AGENTS.md after completing these steps. The skills and conventions below remain — this block is one-time onboarding only.
-
-1. **Get your bearings.** Take stock of the project tree, the skills in `skills/`, and the tools/MCP servers available. Light tool use is fine for context-building — you're mapping the territory, not committing yet.
-2. **Read the framework docs** — `node_modules/@cyanheads/mcp-ts-core/CLAUDE.md` (builders, Context, errors, exports, conventions)
-3. **Run the `setup` skill** — read `skills/setup/SKILL.md` and follow its checklist (project orientation, agent protocol file selection, echo definition cleanup, skill sync)
-4. **Design the server** — read `skills/design-mcp-server/SKILL.md` and work through it with the user to map the domain into tools, resources, and services before scaffolding
-
----
-
 ## What's Next?
 
 When the user asks what's next or needs direction, suggest options based on the current project state. Common next steps:
@@ -60,26 +47,34 @@ Tailor suggestions to what's actually missing or stale — don't recite the full
 
 ```ts
 import { tool, z } from '@cyanheads/mcp-ts-core';
+import { JsonRpcErrorCode } from '@cyanheads/mcp-ts-core/errors';
 
-export const searchItems = tool('search_items', {
-  description: 'Search inventory items by query.',
-  annotations: { readOnlyHint: true },
+export const clipboardRead = tool('clipboard_read', {
+  title: 'Read Clipboard',
+  description: 'Read the current clipboard contents in a requested format.',
+  annotations: { readOnlyHint: true, openWorldHint: false },
   input: z.object({
-    query: z.string().describe('Search terms'),
-    limit: z.number().default(10).describe('Max results'),
+    format: z.enum(['text', 'html', 'rtf', 'image', 'auto']).default('auto')
+      .describe('Format to return. "auto" returns the richest format present.'),
   }),
   output: z.object({
-    items: z.array(z.object({
-      id: z.string().describe('Item ID'),
-      name: z.string().describe('Item name'),
-    })).describe('Matching items'),
+    format: z.enum(['text', 'html', 'rtf', 'image']).describe('Format actually returned.'),
+    content: z.string().describe('Clipboard contents (base64 PNG for image format).'),
+    byteSize: z.number().int().describe('Size of the content in bytes.'),
   }),
-  auth: ['inventory:read'],
+  errors: [
+    {
+      reason: 'format_unavailable',
+      code: JsonRpcErrorCode.NotFound,
+      when: 'Requested format is not present on the clipboard.',
+      recovery: 'Call clipboard_inspect to see available formats, then retry with a supported format.',
+    },
+  ],
 
   async handler(input, ctx) {
-    const items = await findItems(input.query, input.limit);
-    ctx.log.info('Search completed', { query: input.query, count: items.length });
-    return { items };
+    const svc = getClipboardService();
+    const result = await svc.read(input.format === 'auto' ? 'text' : input.format, ctx);
+    return { format: result.format, content: result.content.toString('utf8'), byteSize: result.content.byteLength };
   },
 
   // format() populates content[] — the markdown twin of structuredContent.
@@ -88,7 +83,7 @@ export const searchItems = tool('search_items', {
   // Enforced at lint time: every field in `output` must appear in the rendered text.
   format: (result) => [{
     type: 'text',
-    text: result.items.map(i => `**${i.id}**: ${i.name}`).join('\n'),
+    text: `**Format:** ${result.format}\n**Size:** ${result.byteSize.toLocaleString()} bytes\n\n${result.content}`,
   }],
 });
 ```
@@ -218,19 +213,19 @@ See framework CLAUDE.md and the `api-errors` skill for the full auto-classificat
 ```text
 src/
   index.ts                              # createApp() entry point
-  config/
-    server-config.ts                    # Server-specific env vars (Zod schema)
-  services/
-    [domain]/
-      [domain]-service.ts               # Domain service (init/accessor pattern)
-      types.ts                          # Domain types
   mcp-server/
     tools/definitions/
-      [tool-name].tool.ts               # Tool definitions
-    resources/definitions/
-      [resource-name].resource.ts       # Resource definitions
-    prompts/definitions/
-      [prompt-name].prompt.ts           # Prompt definitions
+      clipboard-inspect.tool.ts         # clipboard_inspect tool
+      clipboard-read.tool.ts            # clipboard_read tool
+      clipboard-write.tool.ts           # clipboard_write tool
+  services/
+    clipboard/
+      clipboard-service.ts              # ClipboardService facade + init/accessor
+      types.ts                          # Domain types and interfaces
+      macos-backend.ts                  # macOS backend (pbcopy/pbpaste/osascript)
+      linux-x11-backend.ts              # Linux X11 backend (xclip)
+      linux-wayland-backend.ts          # Linux Wayland backend (wl-clipboard)
+      windows-backend.ts                # Windows backend (PowerShell)
 ```
 
 ---
