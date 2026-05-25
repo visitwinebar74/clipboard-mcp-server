@@ -57,10 +57,11 @@ const publicRtf = 'public.rtf';
 let data = pb.dataForType(rtfType);
 if (!data || !data.length) data = pb.dataForType(publicRtf);
 if (!data || !data.length) {
-  // Try stringForType for plain RTF
+  // Try stringForType for plain RTF — unwrap first to guard against bridged nil (truthy but undefined after unwrap)
   const s = pb.stringForType(publicRtf);
-  if (s) {
-    JSON.stringify({ type: 'string', value: ObjC.unwrap(s) });
+  const sv = s ? ObjC.unwrap(s) : null;
+  if (sv != null) {
+    JSON.stringify({ type: 'string', value: sv });
   } else {
     'null';
   }
@@ -240,6 +241,12 @@ export class MacosBackend implements ClipboardBackend {
   async read(format: ClipboardFormat): Promise<ReadResult> {
     switch (format) {
       case 'text': {
+        // pbpaste returns "" on empty clipboard, indistinguishable from a real empty string.
+        // Inspect first so an empty clipboard gets a proper "not found" error.
+        const inspection = await this.inspect();
+        if (!inspection.availableFormats.includes('text')) {
+          throw new Error('text format not found on clipboard');
+        }
         const buf = await runPbpaste();
         return { format: 'text', content: buf };
       }

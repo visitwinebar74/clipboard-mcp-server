@@ -200,6 +200,34 @@ describe('clipboardRead', () => {
         data: { reason: 'format_unavailable' },
       });
     });
+
+    it('throws format_unavailable for text when backend says not found (empty clipboard)', async () => {
+      // Backend throws "text format not found" when clipboard has no text type
+      const svc = mockService({
+        read: Promise.reject(new Error('text format not found on clipboard')),
+      });
+      mockGetService.mockReturnValueOnce(svc);
+
+      const ctx = createMockContext({ errors: clipboardRead.errors });
+      const input = clipboardRead.input.parse({ format: 'text' });
+      await expect(clipboardRead.handler(input, ctx)).rejects.toMatchObject({
+        data: { reason: 'format_unavailable' },
+      });
+    });
+
+    it('throws format_unavailable for rtf when backend returns null (no RTF on clipboard)', async () => {
+      // Backend throws "RTF format not found" when public.rtf is absent
+      const svc = mockService({
+        read: Promise.reject(new Error('RTF format not found on clipboard')),
+      });
+      mockGetService.mockReturnValueOnce(svc);
+
+      const ctx = createMockContext({ errors: clipboardRead.errors });
+      const input = clipboardRead.input.parse({ format: 'rtf' });
+      await expect(clipboardRead.handler(input, ctx)).rejects.toMatchObject({
+        data: { reason: 'format_unavailable' },
+      });
+    });
   });
 
   describe('error: content_too_large', () => {

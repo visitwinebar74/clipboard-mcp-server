@@ -105,16 +105,26 @@ describe('MacosBackend', () => {
 
   describe('read() text', () => {
     it('reads text via pbpaste', async () => {
+      // inspect() runs first (JXA) — text type must be present
+      const types = JSON.stringify([{ type: 'public.utf8-plain-text', bytes: 11 }]);
+      mockSpawn.mockReturnValueOnce(fakeChild({ stdout: types }));
+      // pbpaste returns the text content
       mockSpawn.mockReturnValueOnce(fakeChild({ stdout: 'hello world' }));
       const result = await backend.read('text');
       expect(result.format).toBe('text');
       expect(result.content.toString('utf8')).toBe('hello world');
-      // Verify pbpaste was called (not osascript)
+      // Verify pbpaste was called second (not osascript for the actual read)
       expect(mockSpawn).toHaveBeenCalledWith('pbpaste', [], expect.any(Object));
     });
 
     it('round-trips unicode and emoji', async () => {
       const text = 'Hello 世界 🌍';
+      // inspect() runs first
+      const types = JSON.stringify([
+        { type: 'public.utf8-plain-text', bytes: Buffer.byteLength(text, 'utf8') },
+      ]);
+      mockSpawn.mockReturnValueOnce(fakeChild({ stdout: types }));
+      // pbpaste returns content
       mockSpawn.mockReturnValueOnce(fakeChild({ stdout: Buffer.from(text, 'utf8') }));
       const result = await backend.read('text');
       expect(result.content.toString('utf8')).toBe(text);
@@ -177,6 +187,32 @@ describe('MacosBackend', () => {
       mockSpawn.mockReturnValueOnce(fakeChild({ stdout: jxaResult }));
       const result = await backend.read('rtf');
       expect(result.content.toString('utf8')).toBe(rtfContent);
+    });
+
+    it('throws when RTF not present (osascript returns null)', async () => {
+      // JXA returns 'null' string when public.rtf and com.apple.flat-rtfd are absent
+      mockSpawn.mockReturnValueOnce(fakeChild({ stdout: 'null' }));
+      await expect(backend.read('rtf')).rejects.toThrow(/not found/i);
+    });
+  });
+
+  describe('read() text — empty clipboard', () => {
+    it('throws when text not present on clipboard', async () => {
+      // inspect returns empty → text not in availableFormats → should throw
+      const emptyInspect = JSON.stringify([]);
+      mockSpawn.mockReturnValueOnce(fakeChild({ stdout: emptyInspect }));
+      await expect(backend.read('text')).rejects.toThrow(/not found/i);
+    });
+
+    it('returns empty buffer when text type is present but content is empty', async () => {
+      // inspect: text type is present
+      const types = JSON.stringify([{ type: 'public.utf8-plain-text', bytes: 0 }]);
+      mockSpawn.mockReturnValueOnce(fakeChild({ stdout: types }));
+      // pbpaste: returns empty string
+      mockSpawn.mockReturnValueOnce(fakeChild({ stdout: '' }));
+      const result = await backend.read('text');
+      expect(result.format).toBe('text');
+      expect(result.content.toString('utf8')).toBe('');
     });
   });
 
