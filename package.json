@@ -1,6 +1,6 @@
 {
   "name": "@cyanheads/clipboard-mcp-server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Read, write, and inspect the system clipboard across macOS, Linux (X11/Wayland), and Windows via MCP.",
   "type": "module",
   "main": "dist/index.js",

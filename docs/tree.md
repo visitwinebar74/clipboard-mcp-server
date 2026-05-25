@@ -1,6 +1,6 @@
 # clipboard-mcp-server - Directory Structure
 
-Generated on: 2026-05-25 08:09:45
+Generated on: 2026-05-25 08:49:16
 
 ```text
 clipboard-mcp-server/
@@ -133,6 +133,7 @@ clipboard-mcp-server/
 │   │       ├── linux-wayland-backend.test.ts
 │   │       ├── linux-x11-backend.test.ts
 │   │       ├── macos-backend.test.ts
+│   │       ├── types.test.ts
 │   │       └── windows-backend.test.ts
 │   └── tools/
 │       ├── clipboard-inspect.tool.test.ts
