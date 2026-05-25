@@ -1,19 +1,19 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "cyanheads/clipboard-mcp-server",
+  "name": "io.github.cyanheads/clipboard-mcp-server",
   "description": "Read, write, and inspect the system clipboard on macOS, Linux (X11/Wayland), and Windows via MCP.",
   "repository": {
     "url": "https://github.com/cyanheads/clipboard-mcp-server",
     "source": "github"
   },
-  "version": "0.1.2",
+  "version": "0.1.3",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
-      "identifier": "clipboard-mcp-server",
+      "identifier": "@cyanheads/clipboard-mcp-server",
       "runtimeHint": "node",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "packageArguments": [
         {
           "type": "positional",
@@ -40,9 +40,9 @@
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
-      "identifier": "clipboard-mcp-server",
+      "identifier": "@cyanheads/clipboard-mcp-server",
       "runtimeHint": "node",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "packageArguments": [
         {
           "type": "positional",

@@ -2,6 +2,10 @@
 
 All notable changes to this project. Each entry links to its full per-version file in [changelog/](changelog/).
 
+## [0.1.3](changelog/0.1.x/0.1.3.md) — 2026-05-25
+
+fix server.json name/identifier and add mcpName for MCP Registry publishing
+
 ## [0.1.2](changelog/0.1.x/0.1.2.md) — 2026-05-25
 
 fix format_unavailable errors for RTF-absent/empty clipboard and HTML plain-text fallback
