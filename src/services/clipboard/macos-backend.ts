@@ -27,7 +27,7 @@ if (types && types.count > 0) {
   for (let i = 0; i < types.count; i++) {
     const t = ObjC.unwrap(types.objectAtIndex(i));
     const data = pb.dataForType(t);
-    const bytes = data && data.length ? data.length : 0;
+    const bytes = data && data.length ? Number(data.length) : 0;
     result.push({ type: t, bytes: bytes });
   }
 }
