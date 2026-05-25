@@ -1,6 +1,6 @@
 # clipboard-mcp-server - Directory Structure
 
-Generated on: 2026-05-25 08:04:14
+Generated on: 2026-05-25 08:09:45
 
 ```text
 clipboard-mcp-server/
@@ -144,7 +144,6 @@ clipboard-mcp-server/
 ├── .mcpbignore
 ├── biome.json
 ├── bun.lock
-├── bunfig.toml
 ├── CHANGELOG.md
 ├── CLAUDE.md
 ├── devcheck.config.json
