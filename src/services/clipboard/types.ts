@@ -50,16 +50,29 @@ export function buildInspectFormats(semanticSet: Set<ClipboardFormat>): {
 
 /** Strip HTML tags to produce plain text, decoding common entities. */
 export function stripHtmlTags(html: string): string {
-  return html
-    .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return (
+    html
+      // Remove script and style blocks entirely (content, not just tags)
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
+      // Insert a space before block-level closing tags so adjacent blocks don't merge
+      .replace(
+        /<\/(p|h[1-6]|div|li|td|tr|blockquote|pre|article|section|header|footer|aside|nav|main|figure|figcaption)>/gi,
+        ' ',
+      )
+      // Also insert a space before self-closing <br> tags
+      .replace(/<br\s*\/?>/gi, ' ')
+      // Strip remaining tags
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+  );
 }
 
 /** Result of reading clipboard content. */
